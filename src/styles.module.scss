@@ -1,0 +1,35 @@
+@mixin flex-center-sm-gap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--margin-sm);
+}
+
+.mainContent{
+    width: 50%;
+    height: 100%;
+    background-color: green;
+}
+
+.body{
+height: 100%;
+}
+
+.mainApp {
+  padding:var(--margin-lg);
+  box-sizing: border-box;
+  @include flex-center-sm-gap();
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100dvh;
+  width: 100dvw;
+  background: linear-gradient(180deg, var(--bg-light) 20%, var(--bg-dark) 80%);
+}
+
+.titleContainer{
+    @include flex-center-sm-gap();
+    align-items: flex-end;
+    h1{
+        color:var(--text);
+    }
+}
