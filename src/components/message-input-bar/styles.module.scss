@@ -1,0 +1,26 @@
+.messageInputBarComponent{
+    flex:3;
+    display: flex;
+    align-items: center;
+    gap:var(--margin-md);
+    padding-block:var(--margin-md);
+
+    input{
+        width: 100%;
+        border:none;
+        outline: none;
+        border-radius: .5rem;
+        background-color: var(--bg-light);
+        font-size: 1.2rem;
+        color:var(--text);
+        padding:var(--margin-sm);
+    }
+
+    button{
+        border: none;
+        outline: none;
+        padding:var(--margin-sm);
+        width: 100px;
+        border-radius: .5rem;
+    }
+}
