@@ -11,5 +11,9 @@
   font-size: 1.2rem;
   color: var(--text);
   padding: var(--margin-sm);
+
+  &::placeholder{
+    color: var(--text-muted);
+  }
  }
 }

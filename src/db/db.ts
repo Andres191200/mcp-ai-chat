@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, push, ref, set } from "firebase/database";
+
+type TMessage = {
+  message: string;
+  userID: number;
+  timestamp: Date;
+};
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,4 +20,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-export { db };
+async function sendMessage({ message, userID }: TMessage): Promise<void> {
+  try {
+    const messagesRef = ref(db, "messages");
+    const newMessageRef = push(messagesRef);
+    await set(newMessageRef, {
+      message,
+      userID,
+      timestamp: Date.now(),
+    });
+    console.log('message sent successfully');
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { db, sendMessage };
