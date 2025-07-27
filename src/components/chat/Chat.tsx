@@ -5,6 +5,7 @@ import { db } from '../../db/db';
 
 export default function Chat() {
   const database = db;
+  console.log('db: ', database);
   return (
     <div className={styles.chatComponent}>
         <Messages />

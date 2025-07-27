@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import styles from './styles.module.scss';
+import styles from "./styles.module.scss";
 
-export default function Input() {
-  const [message, setMessage] = useState<string>('');
+type TInputProps = {
+  onChange: (message: string) => void;
+  value: string;
+  disabled: boolean;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value">;
+
+export default function Input({ onChange, value, ...rest }: TInputProps) {
   return (
     <div className={styles.inputComponent}>
-      <input type="text" className={styles.messageInput} onChange={() => setMessage(message)} value={message}/>
+      <input
+        {...rest}
+        type="text"
+        className={styles.messageInput}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
     </div>
-  )
+  );
 }
