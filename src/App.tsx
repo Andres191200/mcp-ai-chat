@@ -2,11 +2,7 @@ import Chat from "./components/chat/Chat";
 import "./globals.scss";
 import styles from "./styles.module.scss";
 
-// const dataBase = db;
 function App() {  
-  // console.log('db: ', dataBase);
-  console.log('env: ', process.env['REACT_APP_FIREBASE_API_KEY']);
-  
   return (
     <div className={styles.mainApp}>
       <div className={styles.mainContent}>

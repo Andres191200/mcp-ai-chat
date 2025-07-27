@@ -1,5 +1,17 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  set,
+  type Unsubscribe,
+} from "firebase/database";
+
+type TMessage = {
+  message: string;
+  userID: number;
+};
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,4 +26,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-export { db };
+async function sendMessageToDb({ message, userID }: TMessage): Promise<void> {
+  try {
+    const messagesRef = ref(db, "messages");
+    const newMessageRef = push(messagesRef);
+    await set(newMessageRef, {
+      message,
+      userID,
+      timestamp: Date.now(),
+    });
+  } catch (error) {
+    console.log("THERE WAS AN ERROR: ", error);
+  }
+}
+
+function getMessagesFromDb({
+  callback,
+}: {
+  callback: (messages: TMessage[]) => void;
+}): Unsubscribe {
+  const messagesRef = ref(db, "messages");
+
+  const unsubscribe = onValue(messagesRef, (snapshot) => {
+    const data = snapshot.val();
+
+    if (!data) {
+      return callback([]);
+    }
+
+    const parsedMessages = Object.values(data) as TMessage[];
+
+    return callback(parsedMessages);
+  });
+  return unsubscribe;
+}
+
+export { db, sendMessageToDb, getMessagesFromDb };
+export type { TMessage };
