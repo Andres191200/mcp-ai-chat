@@ -1,4 +1,12 @@
 .messagesBoxComponent{
     width: 100%;
     height: 90%;
+
+    div{
+        margin-block:1rem;
+    }
+
+    *{
+        color:var(--text);
+    }
 }

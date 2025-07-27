@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, push, ref, set } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  set,
+  type Unsubscribe,
+} from "firebase/database";
 
 type TMessage = {
   message: string;
@@ -20,7 +27,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 async function sendMessageToDb({ message, userID }: TMessage): Promise<void> {
-  console.log('config: ', firebaseConfig);
   try {
     const messagesRef = ref(db, "messages");
     const newMessageRef = push(messagesRef);
@@ -29,10 +35,31 @@ async function sendMessageToDb({ message, userID }: TMessage): Promise<void> {
       userID,
       timestamp: Date.now(),
     });
-    console.log('message sent successfully');
   } catch (error) {
-    console.log('THERE WAS AN ERROR: ', error);
+    console.log("THERE WAS AN ERROR: ", error);
   }
 }
 
-export { db, sendMessageToDb };
+function getMessagesFromDb({
+  callback,
+}: {
+  callback: (messages: TMessage[]) => void;
+}): Unsubscribe {
+  const messagesRef = ref(db, "messages");
+
+  const unsubscribe = onValue(messagesRef, (snapshot) => {
+    const data = snapshot.val();
+
+    if (!data) {
+      return callback([]);
+    }
+
+    const parsedMessages = Object.values(data) as TMessage[];
+
+    return callback(parsedMessages);
+  });
+  return unsubscribe;
+}
+
+export { db, sendMessageToDb, getMessagesFromDb };
+export type { TMessage };
