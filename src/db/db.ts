@@ -4,7 +4,6 @@ import { getDatabase, push, ref, set } from "firebase/database";
 type TMessage = {
   message: string;
   userID: number;
-  timestamp: Date;
 };
 
 const firebaseConfig = {
@@ -20,7 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-async function sendMessage({ message, userID }: TMessage): Promise<void> {
+async function sendMessageToDb({ message, userID }: TMessage): Promise<void> {
+  console.log('config: ', firebaseConfig);
   try {
     const messagesRef = ref(db, "messages");
     const newMessageRef = push(messagesRef);
@@ -31,8 +31,8 @@ async function sendMessage({ message, userID }: TMessage): Promise<void> {
     });
     console.log('message sent successfully');
   } catch (error) {
-    console.log(error);
+    console.log('THERE WAS AN ERROR: ', error);
   }
 }
 
-export { db, sendMessage };
+export { db, sendMessageToDb };

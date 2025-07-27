@@ -12,6 +12,10 @@
   color: var(--text);
   padding: var(--margin-sm);
 
+  &:disabled{
+    filter: brightness(0.5);
+  }
+
   &::placeholder{
     color: var(--text-muted);
   }
