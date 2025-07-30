@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import { getMessagesFromDb, type TMessage } from '../../db/db';
 import { useEffect, useState } from 'react';
+import Message from '../message/Message';
 
 export default function Messages() {
   const [messages, setMessages] = useState<TMessage[]>([]);
@@ -14,10 +15,7 @@ export default function Messages() {
       {
         messages.map((message:TMessage) => {
           return (
-            <div className="messageContainer">
-              <h3>Message: {message.message}</h3>
-              <p>User: {message.userID}</p>
-            </div>
+            <Message message={message.message} userID={message.userID} />
           )
         })
       }
