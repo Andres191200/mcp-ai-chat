@@ -9,7 +9,13 @@
         border: none;
         outline: none;
         padding:var(--margin-sm);
+        cursor:pointer;
         width: 100px;
-        border-radius: .5rem;
+        border-radius: var(--margin-sm);
+        transition: transform 100ms ease-out;
+
+        &:active{
+            transform: scale(0.9);
+        }
     }
 }

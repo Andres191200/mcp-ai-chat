@@ -10,13 +10,10 @@ export default function Chat() {
   const [loading, setLoading] = useState<boolean>(false);
 
   function sendMessage(message: string) {
-    // CALL DB
-    console.log("message from chat component: ", message);
     const userID = 3;
     setLoading(true);
     sendMessageToDb({ message, userID });
     setLoading(false);
-    console.log("message sent successfully: ");
 
   }
 

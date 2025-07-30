@@ -1,12 +1,11 @@
 .messagesBoxComponent{
     width: 100%;
     height: 90%;
-
+    overflow-y: scroll;
+  scrollbar-color: var(--text-muted) var(--bg-dark);
+  scrollbar-width: thin;
     div{
-        margin-block:1rem;
+        margin-block:var(--margin-md);
     }
 
-    *{
-        color:var(--text);
-    }
 }

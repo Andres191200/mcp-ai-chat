@@ -1,0 +1,17 @@
+.messageComponent{
+    display: flex;
+    flex-direction: column;
+    gap:var(--margin-sm);
+    background-color: var(--bg-light);
+    width: max-content;
+    padding: var(--margin-sm);
+    border-radius: var(--margin-sm);
+    
+    h3, p{
+        color:var(--text);
+    }
+
+    p{
+        font-size: 1.2rem;
+    }
+}
