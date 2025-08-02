@@ -1,0 +1,17 @@
+.circularSpinnerLoadingComponent{
+    height: 30px;
+    width: 30px;
+    border-left: 3px solid var(--text);
+    animation: spin 500ms linear infinite;
+    border-radius: 20rem;
+
+    @starting-style{
+        transform: rotate(0);
+    }
+}
+
+@keyframes spin{
+    to{
+        transform: rotate(1turn)
+    }
+}
