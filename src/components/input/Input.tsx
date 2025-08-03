@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss";
+import React from 'react';
 
 type TInputProps = {
   onChange: (message: string) => void;
@@ -7,15 +8,16 @@ type TInputProps = {
   placeholder: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value">;
 
-export default function Input({
+export default React.forwardRef<HTMLInputElement, TInputProps>(function Input({
   onChange,
   value,
   placeholder,
   ...rest
-}: TInputProps) {
+}, ref) {
   return (
     <div className={styles.inputComponent}>
       <input
+        ref={ref}
         {...rest}
         placeholder={placeholder}
         type="text"
@@ -25,4 +27,4 @@ export default function Input({
       />
     </div>
   );
-}
+});

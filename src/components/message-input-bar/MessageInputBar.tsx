@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Input from "../input/Input";
 import styles from "./styles.module.scss";
 
@@ -7,24 +7,43 @@ type TMessageInputBarProps = {
   disabled: boolean;
 };
 
-
-export default function MessageInputBar({ onSendMessage, disabled }: TMessageInputBarProps) {
+export default function MessageInputBar({
+  onSendMessage,
+  disabled,
+}: TMessageInputBarProps) {
   const [message, setMessage] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   function onChangeInput(message: string) {
     setMessage(message);
   }
 
-  function handleClick(message: string) {
+  function handleClick(message: string, event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
+    if(inputRef.current){
+      inputRef.current.blur();
+    }
+    event.preventDefault();
     onSendMessage(message);
-    setMessage('');
+    setMessage("");
   }
-
 
   return (
     <div className={styles.messageInputBarComponent}>
-      <Input value={message} onChange={onChangeInput} disabled={disabled} placeholder="Type a message!"/>
-      <button className={styles.sendMessageButton} onClick={() => handleClick(message)}>Send</button>
+      <form onSubmit={(event) => handleClick(message, event)}>
+        <Input
+          ref={inputRef}
+          value={message}
+          onChange={onChangeInput}
+          disabled={disabled}
+          placeholder="Type a message!"
+        />
+        <button
+          className={styles.sendMessageButton}
+          onClick={(event) => handleClick(message, event)}
+        >
+          Send
+        </button>
+      </form>
     </div>
   );
 }
