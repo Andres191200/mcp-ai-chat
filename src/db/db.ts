@@ -9,8 +9,10 @@ import {
 } from "firebase/database";
 
 type TMessage = {
+  userName: string;
   message: string;
   userID: number;
+  date: number;
 };
 
 const firebaseConfig = {
@@ -26,14 +28,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-async function sendMessageToDb({ message, userID }: TMessage): Promise<void> {
+async function sendMessageToDb({ message, userID, date, userName }: TMessage): Promise<void> {
   try {
     const messagesRef = ref(db, "messages");
     const newMessageRef = push(messagesRef);
     await set(newMessageRef, {
       message,
       userID,
-      timestamp: Date.now(),
+      userName,
+      timestamp: date,
+      date,
     });
   } catch (error) {
     console.log("THERE WAS AN ERROR: ", error);
@@ -53,7 +57,6 @@ function getMessagesFromDb({
     if (!data) {
       return callback([]);
     }
-
     const parsedMessages = Object.values(data) as TMessage[];
 
     return callback(parsedMessages);
