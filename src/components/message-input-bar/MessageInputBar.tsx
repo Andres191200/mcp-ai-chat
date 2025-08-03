@@ -12,13 +12,11 @@ export default function MessageInputBar({ onSendMessage, disabled }: TMessageInp
   const [message, setMessage] = useState<string>("");
 
   function onChangeInput(message: string) {
-    console.log('message: ', message);
     setMessage(message);
   }
 
   function handleClick(message: string) {
     onSendMessage(message);
-    console.log('MESSAGEBOX CLEARING...');
     setMessage('');
   }
 

@@ -12,7 +12,7 @@ export default function Chat() {
   function sendMessage(message: string) {
     const userID = 3;
     setLoading(true);
-    sendMessageToDb({ message, userID });
+    sendMessageToDb({ message, userID, date: Date.now(), userName: "Andrés"});
     setLoading(false);
 
   }

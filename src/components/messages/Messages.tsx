@@ -8,9 +8,12 @@ export default function Messages() {
   const [messages, setMessages] = useState<TMessage[] | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  function scrollToBottom(){
-    if(containerRef.current){
-      containerRef.current.scrollTo({ top: containerRef.current.scrollHeight, behavior: 'smooth' });
+  function scrollToBottom() {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }
 
@@ -18,11 +21,12 @@ export default function Messages() {
     scrollToBottom();
   }, [messages]);
 
-
   useEffect(() => {
-    getMessagesFromDb({
+    const unsubscribe = getMessagesFromDb({
       callback: (messages: TMessage[]) => setMessages(messages),
     });
+
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -32,9 +36,18 @@ export default function Messages() {
           <span>Loading messages...</span>
           <CircularSpinnerLoading />
         </div>
-      ) : messages.map((message: TMessage) => {
-        return <Message message={message.message} userID={message.userID} />;
-      })}
+      ) : (
+        messages.map((message: TMessage) => {
+          return (
+            <Message
+              message={message.message}
+              userName={message.userName}
+              date={message.date}
+              userID={message.userID}
+            />
+          );
+        })
+      )}
     </div>
   );
 }
