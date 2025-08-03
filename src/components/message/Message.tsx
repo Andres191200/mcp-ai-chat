@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./styles.module.scss";
 import type { TMessage } from "../../db/db";
+import gsap from "gsap";
 
 export default function Message({ message, date, userName }: TMessage) {
-  console.log("date: ", date);
   const messageDate = new Date(date);
+  const messageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if(messageRef.current){
+      gsap.fromTo(messageRef.current, {
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        ease: "power2.out"
+      }, {
+        y: 0,
+        opacity: 1,
+        ease: "power2.out"
+      });
+    }
+  }, []);
+  
   return (
-    <div className={styles.messageComponent}>
+    <div className={styles.messageComponent} ref={messageRef}>
       <div className={styles.messageHeader}>
         <p>{userName}</p>
         <p className={styles.date}>{messageDate.toLocaleString("es-AR")}</p>

@@ -1,22 +1,24 @@
-@mixin flex-center-sm-gap{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--margin-sm);
+@mixin flex-center-sm-gap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--margin-sm);
+}
+.mainContent {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
-.mainContent{
-    width: 50%;
-    height: 100%;
-}
-
-
-.body{
-    height: 90%;
+.body {
+  height: 90%;
+  width: 100%;
 }
 
 .mainApp {
-  padding:var(--margin-lg);
+  padding: var(--margin-lg);
   box-sizing: border-box;
   @include flex-center-sm-gap();
   flex-direction: column;
@@ -26,10 +28,11 @@
   background: linear-gradient(180deg, var(--bg-light) 5%, var(--bg-dark) 80%);
 }
 
-.titleContainer{
-    @include flex-center-sm-gap();
-    align-items: flex-end;
-    h1{
-        color:var(--text);
-    }
+.titleContainer {
+  @include flex-center-sm-gap();
+  position: relative;
+  width: max-content;
+  h1 {
+    color: var(--text);
+  }
 }

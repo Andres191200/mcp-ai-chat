@@ -1,14 +1,43 @@
+import { useEffect, useRef } from "react";
 import Chat from "./components/chat/Chat";
 import "./globals.scss";
 import styles from "./styles.module.scss";
+import gsap from 'gsap';
 
-function App() {  
+function App() {
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      const letteredTitle = (titleRef.current.textContent || "").split("");
+      titleRef.current.innerHTML = "";
+
+      letteredTitle.forEach((letter) => {
+        const span = document.createElement('span');
+        span.textContent = letter;
+        span.style.opacity = '0';
+        span.style.filter = "blur(20px)"
+        titleRef.current!.appendChild(span);
+      });
+
+      gsap.to(titleRef.current!.children, {
+        opacity: 1,
+        duration: 1,
+        ease: "none",
+        filter: "blur(0px)",
+        stagger: 0.02,
+      });
+
+
+    }
+  }, []);
+
   return (
     <div className={styles.mainApp}>
       <div className={styles.mainContent}>
         <header>
           <div className={styles.titleContainer}>
-            <h1>Chat app with MCP</h1>
+            <h1 ref={titleRef}>Chat app with MCP</h1>
           </div>
         </header>
         <div className={styles.body}>
