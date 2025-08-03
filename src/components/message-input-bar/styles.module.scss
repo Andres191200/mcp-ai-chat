@@ -1,9 +1,14 @@
 .messageInputBarComponent{
     flex:3;
-    display: flex;
+   
+    form{
+        width: 100%;
+        display: inline;
+         display: flex;
     align-items: center;
     gap:var(--margin-lg);
     padding-block:var(--margin-md);
+    }
 
     button{
         border: none;
