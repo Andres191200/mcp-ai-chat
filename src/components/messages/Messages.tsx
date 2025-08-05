@@ -12,7 +12,6 @@ export default function Messages() {
     if (containerRef.current) {
       containerRef.current.scrollTo({
         top: containerRef.current.scrollHeight,
-        behavior: "smooth",
       });
     }
   }
