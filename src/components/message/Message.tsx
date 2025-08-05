@@ -10,13 +10,16 @@ export default function Message({ message, date, userName }: TMessage) {
   useEffect(() => {
     if(messageRef.current){
       gsap.fromTo(messageRef.current, {
-        duration: 1,
-        y: 50,
+        duration: 0.5,
+        delay: 0.1,
+        y: 25,
         opacity: 0,
         ease: "power2.out"
       }, {
         y: 0,
         opacity: 1,
+        duration: 0.5,
+        delay: 0.1,
         ease: "power2.out"
       });
     }
