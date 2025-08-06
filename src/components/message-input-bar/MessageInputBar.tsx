@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Input from "../input/Input";
 import styles from "./styles.module.scss";
 
@@ -13,6 +13,18 @@ export default function MessageInputBar({
 }: TMessageInputBarProps) {
   const [message, setMessage] = useState<string>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+    useEffect(() => {
+    function handleKeyDown(){
+      inputRef.current?.focus();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
 
   function onChangeInput(message: string) {
     setMessage(message);
