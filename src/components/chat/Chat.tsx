@@ -7,20 +7,36 @@ import DOMPurify from "dompurify";
 
 export default function Chat() {
   const [loading, setLoading] = useState<boolean>(false);
-  
-  function sendMessage(message: string) {
+
+  async function sendMessage(message: string) {
     const sanitizedMessage = DOMPurify.sanitize(message);
     const userID = 3;
     setLoading(true);
-    sendMessageToDb({ message: sanitizedMessage, userID, date: Date.now(), userName: "Andrés"});
-    setLoading(false);
+    sendMessageToDb({
+      message: sanitizedMessage,
+      userID,
+      date: Date.now(),
+      userName: "Andrés",
+    });
+    try {
+      await fetch("http://localhost:3000/prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: sanitizedMessage }),
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    } finally {
+      setLoading(false);
+    }
   }
-
 
   return (
     <div className={styles.chatComponent}>
       <Messages />
-      <MessageInputBar onSendMessage={sendMessage} disabled={loading}/>
+      <MessageInputBar onSendMessage={sendMessage} disabled={loading} />
     </div>
   );
 }
