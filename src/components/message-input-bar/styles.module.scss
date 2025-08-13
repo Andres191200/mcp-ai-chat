@@ -1,26 +1,36 @@
-.messageInputBarComponent{
-    flex:3;
-   
-    form{
-        width: 100%;
-        display: inline;
-         display: flex;
+.messageInputBarComponent {
+  flex: 3;
+
+  form {
+    width: 100%;
+    display: flex;
     align-items: center;
-    gap:var(--margin-lg);
-    padding-block:var(--margin-md);
-    }
+    position: relative;
+    gap: var(--margin-lg);
+    padding-block: var(--margin-md);
+  }
 
-    button{
-        border: none;
-        outline: none;
-        padding:var(--margin-sm);
-        cursor:pointer;
-        width: 100px;
-        border-radius: var(--margin-sm);
-        transition: transform 100ms ease-out;
+  .placeholder{
+    position: absolute;
+    top: 50%;
+    color: var(--text);
+    font-size: 1.2rem;
+    left: var(--margin-sm);
+    transform: translate(0, -50%);
 
-        &:active{
-            transform: scale(0.9);
-        }
+  }
+
+  button {
+    border: none;
+    outline: none;
+    padding: var(--margin-sm);
+    cursor: pointer;
+    width: 100px;
+    border-radius: var(--margin-sm);
+    transition: transform 100ms ease-out;
+
+    &:active {
+      transform: scale(0.9);
     }
+  }
 }

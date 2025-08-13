@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Input from "../input/Input";
+import { TypeAnimation } from "react-type-animation";
 import styles from "./styles.module.scss";
 
 type TMessageInputBarProps = {
@@ -13,9 +14,19 @@ export default function MessageInputBar({
 }: TMessageInputBarProps) {
   const [message, setMessage] = useState<string>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const placeholderSequence: (string | number)[] = [
+    "Thinking...",
+    1000,
+    "Generating a response....",
+    1000,
+    "1 sec...",
+    1000,
+    "I'm still thinking...",
+    1000,
+  ];
 
-    useEffect(() => {
-    function handleKeyDown(){
+  useEffect(() => {
+    function handleKeyDown() {
       inputRef.current?.focus();
     }
 
@@ -23,15 +34,20 @@ export default function MessageInputBar({
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, []);
 
   function onChangeInput(message: string) {
     setMessage(message);
   }
 
-  function handleClick(message: string, event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
-    if(inputRef.current){
+  function handleClick(
+    message: string,
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement>
+  ) {
+    if (inputRef.current) {
       inputRef.current.blur();
     }
     event.preventDefault();
@@ -47,8 +63,19 @@ export default function MessageInputBar({
           value={message}
           onChange={onChangeInput}
           disabled={disabled}
-          placeholder="Type a message!"
+          placeholder={disabled ? "" : "Type a message!"}
         />
+        <div className={styles.placeholder}>
+          {disabled ? (
+           <span>
+             <TypeAnimation
+              sequence={placeholderSequence}
+              wrapper="span"
+              repeat={Infinity}
+            />
+           </span>
+          ) : null}
+        </div>
         <button
           className={styles.sendMessageButton}
           onClick={(event) => handleClick(message, event)}

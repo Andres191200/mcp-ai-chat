@@ -18,17 +18,21 @@ export default function Chat() {
       date: Date.now(),
       userName: "Andrés",
     });
-    try {
-      await fetch("http://localhost:3000/prompt", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt: sanitizedMessage }),
-      });
-    } catch (error) {
-      console.log("error: ", error);
-    } finally {
+    if (message.includes("/prompt")) {
+      try {
+        await fetch("http://localhost:3000/prompt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: sanitizedMessage }),
+        });
+      } catch (error) {
+        console.log("error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
       setLoading(false);
     }
   }
