@@ -44,6 +44,17 @@ h1,h2,h3,p,a,span,button, input{
   font-family: 'poppins', sans-serif !important;
   font-weight: 400;
 }
+button{
+  cursor: pointer;
+  background-color: var(--primary);
+  color:var(--bg);
+  &:disabled{
+  background-color: var(--bg-light);
+  color:var(--text);
+  pointer-events: none;
+}
+}
+
 
 h1{
   font-weight: 800 !important;

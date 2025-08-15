@@ -78,6 +78,7 @@ export default function MessageInputBar({
         </div>
         <button
           className={styles.sendMessageButton}
+          disabled={disabled}
           onClick={(event) => handleClick(message, event)}
         >
           Send
