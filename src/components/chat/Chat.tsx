@@ -10,8 +10,8 @@ export default function Chat() {
   async function onSubmit(message: string) {
     setLoading(true);
     const res = await sendMessage(message);
-    console.log('OLLAMA RESPONSE: ', res);
-    console.log('OLLAMA RESPONSE BODY: ', res?.body);
+    const parsedRes = await res?.json();
+    console.log('OLLAMA PARSED RES: ', parsedRes);
 
     setLoading(false);
   }
