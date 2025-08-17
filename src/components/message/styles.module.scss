@@ -32,9 +32,13 @@
   }
 }
 
-.aiMessage .messageContent{
+.aiMessage {
+  width: 100%;
+  align-items: flex-start;
+  .messageContent{
   background-color: var(--info);
   h3{
     color: var(--bg-dark);
   }
+}
 }
