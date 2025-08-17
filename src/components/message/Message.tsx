@@ -26,7 +26,7 @@ export default function Message({ message, date, userName }: TMessage) {
   }, []);
   
   return (
-    <div className={styles.messageComponent} ref={messageRef}>
+    <div className={`${styles.messageComponent} ${userName === "AI" ? styles.aiMessage : styles.userMessage}`} ref={messageRef}>
       <div className={styles.messageHeader}>
         <p>{userName}</p>
         <p className={styles.date}>{messageDate.toLocaleString("es-AR")}</p>

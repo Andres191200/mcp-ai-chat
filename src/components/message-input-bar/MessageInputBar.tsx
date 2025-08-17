@@ -4,12 +4,12 @@ import { TypeAnimation } from "react-type-animation";
 import styles from "./styles.module.scss";
 
 type TMessageInputBarProps = {
-  onSendMessage: (message: string) => void;
+  onSubmit: (message: string) => void;
   disabled: boolean;
 };
 
 export default function MessageInputBar({
-  onSendMessage,
+  onSubmit,
   disabled,
 }: TMessageInputBarProps) {
   const [message, setMessage] = useState<string>("");
@@ -51,7 +51,7 @@ export default function MessageInputBar({
       inputRef.current.blur();
     }
     event.preventDefault();
-    onSendMessage(message);
+    onSubmit(message);
     setMessage("");
   }
 

@@ -1,46 +1,32 @@
 import styles from "./styles.module.scss";
 import MessageInputBar from "../message-input-bar/MessageInputBar";
 import Messages from "../messages/Messages";
-import { sendMessageToDb } from "../../db/db";
 import { useState } from "react";
-import DOMPurify from "dompurify";
+import sendMessage from "../../actions/sendMessage";
+import { sendMessageToDb } from "../../db/db";
 
 export default function Chat() {
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function sendMessage(message: string) {
-    const sanitizedMessage = DOMPurify.sanitize(message);
-    const userID = 3;
+  async function onSubmit(message: string) {
     setLoading(true);
+    const res = await sendMessage(message);
+    const {answer} = await res!.json();
+    console.log('parsedRes_2: ', JSON.parse(answer));
     sendMessageToDb({
-      message: sanitizedMessage,
-      userID,
+      message: JSON.parse(answer).answer,
+      userName: "AI",
       date: Date.now(),
-      userName: "Andrés",
+      userID: 0,
     });
-    if (message.includes("/prompt")) {
-      try {
-        await fetch("http://localhost:3000/prompt", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ prompt: sanitizedMessage }),
-        });
-      } catch (error) {
-        console.log("error: ", error);
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      setLoading(false);
-    }
+    
+    setLoading(false);
   }
 
   return (
     <div className={styles.chatComponent}>
       <Messages />
-      <MessageInputBar onSendMessage={sendMessage} disabled={loading} />
+      <MessageInputBar onSubmit={onSubmit} disabled={loading} />
     </div>
   );
 }
