@@ -31,3 +31,10 @@
     font-size: 1.2rem;
   }
 }
+
+.aiMessage .messageContent{
+  background-color: var(--info);
+  h3{
+    color: var(--bg-dark);
+  }
+}
