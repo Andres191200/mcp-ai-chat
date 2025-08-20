@@ -8,10 +8,25 @@ type TMessagesStore = {
 
 export const useMessagesStore = create<TMessagesStore>((set) => ({
   messages: [],
-  sendMessage: (message: TMessage) =>{
+  sendMessage: (message: TMessage) => {
     set((state: TMessagesStore) => {
-        return { messages: [...state.messages, message] };
+      return { messages: [...state.messages, message] };
     });
     sendMessageToDb({ ...message });
-  }
+  },
+  // CLIENT MESSAGE BECAUSE IT ONLY HAPPENS ON THE CLIENT SIDE, WITHOUT SENDING TO DB
+  addClientMessage: (message: TMessage) => {
+    set((state: TMessagesStore) => ({
+      messages: [...state.messages, message],
+    }));
+  },
+  updateClientMessage: (message: TMessage) =>
+    set((state: TMessagesStore) => ({
+        messages: state.messages.map((msg) => {
+            if (msg.date === message.date) {
+                return message;
+            }
+            return msg;
+        })
+    }))
 }));
