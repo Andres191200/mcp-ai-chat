@@ -5,12 +5,12 @@ import styles from "./styles.module.scss";
 
 type TMessageInputBarProps = {
   onSubmit: (message: string) => void;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export default function MessageInputBar({
   onSubmit,
-  disabled,
+  disabled = false,
 }: TMessageInputBarProps) {
   const [message, setMessage] = useState<string>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
