@@ -21,7 +21,6 @@ export default async function sendMessage(message: string) {
     date: tempID,
     userID: 0,
   });
-
   // 3 - FETCHING THE LLM THROUGH BACKEND
   try {
     const response = await fetch("http://localhost:3000/prompt", {
