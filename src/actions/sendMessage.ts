@@ -46,9 +46,24 @@ export default async function sendMessage(message: TMessage) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(message),
-
     });
-  } catch (error) {
-    console.log("error: ", error);
+    try {
+      const response = await fetch("http://localhost:3000/prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: sanitizedMessage }),
+      });
+      const {answer} = await response.json();
+      useMessagesStore.getState().sendMessage({
+        message: JSON.parse(answer).answer,
+        userName: "AI",
+        date: tempID,
+        userID: 0,
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
   }
 }
