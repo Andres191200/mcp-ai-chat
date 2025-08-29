@@ -41,7 +41,7 @@ export default function Messages() {
           return (
             <Message
               message={message.message}
-              userName={message.userName}
+              username={message.username}
               date={message.date}
               userID={message.userID}
             />
