@@ -7,13 +7,7 @@ import {
   set,
   type Unsubscribe,
 } from "firebase/database";
-
-type TMessage = {
-  userName: string;
-  message: string;
-  userID: number;
-  date: number;
-};
+import type { TMessage } from "../models/message";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -28,14 +22,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-async function sendMessageToDb({ message, userID, date, userName }: TMessage): Promise<void> {
+async function sendMessageToDb({ message, userID, date, username }: TMessage): Promise<void> {
   try {
     const messagesRef = ref(db, "messages");
     const newMessageRef = push(messagesRef);
     await set(newMessageRef, {
       message,
       userID,
-      userName,
+      username,
       timestamp: date,
       date,
     });

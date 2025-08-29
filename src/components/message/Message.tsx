@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import type { TMessage } from "../../db/db";
 import gsap from "gsap";
 
-export default function Message({ message, date, userName }: TMessage) {
+export default function Message({ message, date, username }: TMessage) {
   const messageDate = new Date(date);
   const messageRef = useRef<HTMLDivElement | null>(null);
 
@@ -26,9 +26,9 @@ export default function Message({ message, date, userName }: TMessage) {
   }, []);
   
   return (
-    <div className={`${styles.messageComponent} ${userName === "AI" ? styles.aiMessage : styles.userMessage}`} ref={messageRef}>
+    <div className={`${styles.messageComponent} ${username === "AI" ? styles.aiMessage : styles.userMessage}`} ref={messageRef}>
       <div className={styles.messageHeader}>
-        <p>{userName}</p>
+        <p>{username}</p>
         <p className={styles.date}>{messageDate.toLocaleString("es-AR")}</p>
       </div>
       <div className={styles.messageContent}>

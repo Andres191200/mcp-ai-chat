@@ -10,6 +10,9 @@ export default function Chat() {
   async function onSubmit(message: string) {
     setLoading(true);
     useMessagesStore.getState().sendMessage(message);
+    if (message.startsWith("/prompt")) {
+      useMessagesStore.getState().addClientMessage();
+    }
     setLoading(false);
   }
 
