@@ -6,13 +6,12 @@ import { useState } from "react";
 
 export default function Chat() {
   const [loading, setLoading] = useState<boolean>(false);
+  const {sendMessage, addClientMessage} = useMessagesStore();
 
   async function onSubmit(message: string) {
     setLoading(true);
-    useMessagesStore.getState().sendMessage(message);
-    if (message.startsWith("/prompt")) {
-      useMessagesStore.getState().addClientMessage();
-    }
+    sendMessage(message);
+    addClientMessage();
     setLoading(false);
   }
 

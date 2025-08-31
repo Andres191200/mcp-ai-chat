@@ -1,4 +1,5 @@
 import type { TMessage } from "../db/db";
+import { useMessagesStore } from "../store/store";
 
 export default async function sendMessage(message: TMessage) {
   try {
@@ -9,10 +10,12 @@ export default async function sendMessage(message: TMessage) {
       },
       body: JSON.stringify(message),
     });
-    console.log('MENSAJE DEL LLM ENTRANDO...');
-    console.log('frontend response: ', response);
     const body = await response.json();
-    console.log('response from LLM: ', body);
+    const answer = body.answer;
+    if(answer){
+      // IF THERE IS ANY LLM RESPONSE, DISPLAY IT ON THE CHAT
+      useMessagesStore.getState().addClientMessage(answer);
+    }
     //CHECK IF ANSWER FIELD IS NOT EMPTY AND DO ANOTHER REQUEST TO DB TO SHOW LLM RESPONSE ON THE CHAT??
   } catch (error) {
     console.log("error: ", error);
