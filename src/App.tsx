@@ -3,11 +3,20 @@ import Chat from "./components/chat/Chat";
 import "./globals.scss";
 import styles from "./styles.module.scss";
 import gsap from 'gsap';
+import axios from "axios";
 
 function App() {
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    console.log('APIURL: ', apiUrl);
+    axios.post(`${apiUrl}/api/login`, {
+      "username": "grava",
+      "password": "grava",
+    }).then((res) => console.log('res from api login: ', res.data.token));
+
+
     if (titleRef.current) {
       const letteredTitle = (titleRef.current.textContent || "").split("");
       titleRef.current.innerHTML = "";
