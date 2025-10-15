@@ -2,30 +2,21 @@ import { useEffect, useRef } from "react";
 import Chat from "./components/chat/Chat";
 import "./globals.scss";
 import styles from "./styles.module.scss";
-import gsap from 'gsap';
-import axios from "axios";
+import gsap from "gsap";
 
 function App() {
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    console.log('APIURL: ', apiUrl);
-    axios.post(`${apiUrl}/api/login`, {
-      "username": "grava",
-      "password": "grava",
-    }).then((res) => console.log('res from api login: ', res.data.token));
-
-
     if (titleRef.current) {
       const letteredTitle = (titleRef.current.textContent || "").split("");
       titleRef.current.innerHTML = "";
 
       letteredTitle.forEach((letter) => {
-        const span = document.createElement('span');
+        const span = document.createElement("span");
         span.textContent = letter;
-        span.style.opacity = '0';
-        span.style.filter = "blur(20px)"
+        span.style.opacity = "0";
+        span.style.filter = "blur(20px)";
         titleRef.current!.appendChild(span);
       });
 
@@ -36,8 +27,6 @@ function App() {
         filter: "blur(0px)",
         stagger: 0.02,
       });
-
-
     }
   }, []);
 
